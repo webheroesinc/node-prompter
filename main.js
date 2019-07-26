@@ -36,4 +36,46 @@ module.exports = {
 	});
 	return resp.answer;
     },
+    confirm: async function( question, defaultAnswer ) {
+	let resp;
+	let attempts			= 0;
+	const answersMap		= {
+	    'y': true,
+	    'n': false,
+	};
+	const validAnswers		= Object.keys( answersMap );
+	
+	if ( defaultAnswer === true )
+	    defaultAnswer		= 'y';
+	if ( defaultAnswer === false )
+	    defaultAnswer		= 'n';
+	
+	if ( defaultAnswer !== undefined ) {
+	    defaultAnswer		= defaultAnswer.toLowerCase();
+	    
+	    if ( !validAnswers.includes( defaultAnswer )  )
+		throw new Error("Default answer is not one of the valid answers: " + defaultAnswer);
+	}
+	
+	const validAnswerString		= '[' + validAnswers.map(a => {
+	    return a === defaultAnswer
+		? a.toUpperCase()
+		: a;
+	}).join('/') + ']';
+	
+	while ( resp === undefined || ! validAnswers.includes( resp.answer.toLowerCase() ) ) {
+	    if ( attempts > 10 )
+		throw new Error("Failed to answer correctly 10 times...are you sure you can read?");
+	    
+	    attempts++;
+	    resp			= await read({
+    		prompt: question + ' ' + validAnswerString,
+	    });
+	    
+	    if ( defaultAnswer !== undefined && resp.answer === '' )
+		resp.answer		= defaultAnswer;
+	}
+	
+	return answersMap[ resp.answer ];
+    },
 };

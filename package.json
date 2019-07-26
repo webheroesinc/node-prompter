@@ -1,6 +1,6 @@
 {
   "name": "@whi/prompter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A customized wrapper for the NPM read module",
   "main": "main.js",
   "scripts": {
@@ -11,15 +11,15 @@
     "url": "git+https://github.com/webheroesinc/node-prompter.git"
   },
   "keywords": [
-    "read",
-    "readline",
-    "prompt",
-    "password-prompt"
+    "read"
   ],
   "author": "Matthew Brisebois",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/webheroesinc/node-prompter/issues"
   },
-  "homepage": "https://github.com/webheroesinc/node-prompter#readme"
+  "homepage": "https://github.com/webheroesinc/node-prompter#readme",
+  "dependencies": {
+    "read": "^1.0.7"
+  }
 }
